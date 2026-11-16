@@ -156,4 +156,4 @@ MIT Lisansı. Ayrıntılar için `LICENSE` dosyasına bakın.
 
 ## 👤 Geliştirici
 
-**Cengiz**
+**Cengiz KAYA**
