@@ -107,7 +107,7 @@ void loop() {
 Gereksinimler: **Android Studio** (güncel sürüm), JDK 17+.
 
 ```bash
-git clone https://github.com/KULLANICI_ADI/HC05-Pusula.git
+git clone https://github.com/cengi7/HC05-Pusula.git
 ```
 
 1. Android Studio ile klasörü açın, Gradle senkronizasyonunu bekleyin.
