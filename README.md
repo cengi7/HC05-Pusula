@@ -1,5 +1,7 @@
 # 🧭 HC05 Pusula
 
+<p align="center"><img src="docs/ic_full_512.png" width="120" alt="HC05 Pusula ikonu"></p>
+
 Arduino + pusula sensörü (QMC5883L / HMC5883L) ile ölçülen yön bilgisini **HC-05 Bluetooth** modülü üzerinden alıp telefonda canlı pusula olarak gösteren Android uygulaması.
 
 ![Platform](https://img.shields.io/badge/platform-Android-3DDC84?logo=android&logoColor=white)
