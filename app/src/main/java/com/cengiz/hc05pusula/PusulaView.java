@@ -17,6 +17,9 @@ public class PusulaView extends View {
     private final Paint paintIbreArka = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Paint paintMerkez = new Paint(Paint.ANTI_ALIAS_FLAG);
 
+    private final Path kuzeyPath = new Path();
+    private final Path guneyPath = new Path();
+
     private float aci = 0f;
 
     public PusulaView(Context context) {
@@ -57,8 +60,18 @@ public class PusulaView extends View {
     }
 
     public void setAci(float aci) {
+        if (Float.isNaN(aci) || Float.isInfinite(aci)) return;
         this.aci = ((aci % 360f) + 360f) % 360f;
-        invalidate();
+        postInvalidate(); // Hem UI thread hem arka plan thread'inde güvenle ekranı yeniler
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int defaultSize = (int) (300 * getResources().getDisplayMetrics().density);
+        int w = resolveSize(defaultSize, widthMeasureSpec);
+        int h = resolveSize(defaultSize, heightMeasureSpec);
+        int size = Math.min(w, h);
+        setMeasuredDimension(size, size);
     }
 
     @Override
@@ -70,9 +83,12 @@ public class PusulaView extends View {
         float cx = w / 2f;
         float cy = h / 2f;
         float yaricap = Math.min(w, h) / 2f - 24f;
+        if (yaricap <= 0) return;
 
+        // Dış kadran çemberi
         canvas.drawCircle(cx, cy, yaricap, paintKadran);
 
+        // Derece çizgileri
         for (int d = 0; d < 360; d += 15) {
             float rad = (float) Math.toRadians(d);
             float disR = yaricap;
@@ -87,6 +103,7 @@ public class PusulaView extends View {
             canvas.drawLine(x1, y1, x2, y2, paintCizgi);
         }
 
+        // Yön harfleri (K, D, G, B)
         String[] harfler = {"K", "D", "G", "B"};
         int[] aciDegerleri = {0, 90, 180, 270};
         paintYazi.setTextSize(yaricap * 0.18f);
@@ -100,28 +117,30 @@ public class PusulaView extends View {
             canvas.drawText(harfler[i], x, y, paintYazi);
         }
 
+        // İbre çizimi
         canvas.save();
         canvas.rotate(aci, cx, cy);
 
         float ibreBoy = yaricap * 0.62f;
         float ibreGenis = yaricap * 0.09f;
 
-        Path kuzey = new Path();
-        kuzey.moveTo(cx, cy - ibreBoy);
-        kuzey.lineTo(cx - ibreGenis, cy);
-        kuzey.lineTo(cx + ibreGenis, cy);
-        kuzey.close();
-        canvas.drawPath(kuzey, paintIbre);
+        kuzeyPath.reset();
+        kuzeyPath.moveTo(cx, cy - ibreBoy);
+        kuzeyPath.lineTo(cx - ibreGenis, cy);
+        kuzeyPath.lineTo(cx + ibreGenis, cy);
+        kuzeyPath.close();
+        canvas.drawPath(kuzeyPath, paintIbre);
 
-        Path guney = new Path();
-        guney.moveTo(cx, cy + ibreBoy);
-        guney.lineTo(cx - ibreGenis, cy);
-        guney.lineTo(cx + ibreGenis, cy);
-        guney.close();
-        canvas.drawPath(guney, paintIbreArka);
+        guneyPath.reset();
+        guneyPath.moveTo(cx, cy + ibreBoy);
+        guneyPath.lineTo(cx - ibreGenis, cy);
+        guneyPath.lineTo(cx + ibreGenis, cy);
+        guneyPath.close();
+        canvas.drawPath(guneyPath, paintIbreArka);
 
         canvas.restore();
 
+        // Merkez noktası
         canvas.drawCircle(cx, cy, yaricap * 0.05f, paintMerkez);
     }
 }
