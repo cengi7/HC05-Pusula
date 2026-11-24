@@ -3,51 +3,79 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="#1E1E1E"
+    android:fitsSystemWindows="true"
+    android:paddingStart="20dp"
+    android:paddingEnd="20dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp">
 
-    <TextView
-        android:id="@+id/tvYon"
+    <!-- Üst Bölüm: Yön ve Derece yan yana (kesilmez) -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="—"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        android:layout_marginTop="8dp" />
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp">
 
-    <TextView
-        android:id="@+id/tvDerece"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="—"
-        android:textSize="28sp"
-        android:layout_marginBottom="8dp" />
+        <TextView
+            android:id="@+id/tvYon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="—"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="#EF5350"
+            android:layout_marginEnd="16dp" />
 
+        <TextView
+            android:id="@+id/tvDerece"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0.0°"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF" />
+    </LinearLayout>
+
+    <!-- Orta Bölüm: Küçültülmüş Pusula (240dp) -->
     <com.cengiz.hc05pusula.PusulaView
         android:id="@+id/pusula"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="12dp" />
 
+    <!-- Esnek boşluk (butonları alta iter ama taşırmaz) -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Alt Bölüm: Durum ve Butonlar -->
     <TextView
         android:id="@+id/tvDurum"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bağlı değil"
-        android:textSize="14sp" />
+        android:textColor="#CFD8DC"
+        android:textSize="14sp"
+        android:layout_marginBottom="10dp" />
 
     <Button
         android:id="@+id/btnBaglan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="HC-05'e Bağlan"
-        android:layout_marginTop="16dp" />
+        android:text="HC-05'E BAĞLAN" />
 
     <Button
         android:id="@+id/btnKes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bağlantıyı Kes"
-        android:enabled="false" />
+        android:text="BAĞLANTIYI KES"
+        android:enabled="false"
+        android:layout_marginTop="8dp" />
+
 </LinearLayout>
